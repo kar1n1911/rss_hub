@@ -1,8 +1,8 @@
 import { Route } from '@/types';
-import { load } from 'cheerio';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { load } from 'cheerio';
 
 const link = 'http://www.jwc.zjut.edu.cn';
 const host = 'http://www.jwc.zjut.edu.cn/1849/list.htm';
@@ -25,7 +25,7 @@ const getSingleRecord = async () => {
                     ? {
                           title: title_txt,
                           pubDate: parseDate(dateTxt),
-                          link: 'http://www.jwc.zjut.edu.cn/2024/0621/c1840a268758/page.htm',
+                          link: link_txt,
                       }
                     : {
                           title: title_txt,

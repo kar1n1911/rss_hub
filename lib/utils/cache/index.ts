@@ -1,8 +1,8 @@
 import { config } from '@/config';
-import redis from './redis';
-import memory from './memory';
-import type CacheModule from './base';
 import logger from '@/utils/logger';
+import type CacheModule from './base';
+import memory from './memory';
+import redis from './redis';
 
 const globalCache: {
     get: (key: string) => Promise<string | null | undefined> | string | null | undefined;
@@ -89,10 +89,14 @@ export default {
 
             return v;
         } else {
-            const value = await getValueFunc();
-            cacheModule.set(key, value, maxAge);
-
-            return value;
+            try {
+                const value = await getValueFunc();
+                cacheModule.set(key, value, maxAge);
+                return value;
+            } catch (error) {
+                logger.error(`Error fetching data for key ${key}: ${error}`);
+                return null;
+            }
         }
     },
     globalCache,
